@@ -6,15 +6,18 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import ShoppingContext from "../../context/shopping/shoppingContext";
 import "./Header.css";
-import AuthContext from "../../context/authContext";
-
+import { auth, db } from "../../Firebase";
 
 const Header = () => {
-
   const shoppingContext = useContext(ShoppingContext);
-  const {basket} = shoppingContext;
+  const { basket, user } = shoppingContext;
 
-  const ctx = useContext(AuthContext);
+  const handleAuthentication = () => {
+    if (user) {
+      auth.signOut();
+    }
+  };
+
   return (
     <header className="header">
       <Link to="/">
@@ -40,15 +43,15 @@ const Header = () => {
       </Link>
 
       <div className="header_search">
-        <select className="search_dropdown" name="All" id="All">
-          <option value="" disabled selected hidden>
+        <select className="search_dropdown" name="All" id="All" defaultValue="">
+          <option value="" disabled hidden>
             All
           </option>
-          <option value="departments"> All Departments</option>
-          <option value="Arts"> Arts,Crafts and Sewing</option>
-          <option value="Baby"> Baby</option>
-          <option value="Beauty"> Beauty</option>
-          <option value="Books"> Books</option>
+          <option value="departments">All Departments</option>
+          <option value="Arts">Arts, Crafts and Sewing</option>
+          <option value="Baby">Baby</option>
+          <option value="Beauty">Beauty</option>
+          <option value="Books">Books</option>
         </select>
         <input
           className="header_input"
@@ -58,21 +61,16 @@ const Header = () => {
         <SearchIcon className="search_icon" />
       </div>
       <div className="header_nav">
-        {ctx.isLoggedIn ? (
-          <Link to="/">
-            <div className="header_option" onClick={ctx.onLogout}>
-              <span className="header_optionOne">Hello User</span>
-              <span className="header_optionTwo">Sign Out</span>
-            </div>
-          </Link>
-        ) : (
-          <Link to="/login">
-            <div className="header_option">
-              <span className="header_optionOne">Hello Guest</span>
-              <span className="header_optionTwo">Sign In</span>
-            </div>
-          </Link>
-        )}
+        <Link to={!user && "/login"}>
+          <div className="header_option" onClick={handleAuthentication}>
+            <span className="header_optionOne">
+              Hello {!user ? "Guest" : user.email}
+            </span>
+            <span className="header_optionTwo">
+              {user ? "Sign Out" : "Sign In"}
+            </span>
+          </div>
+        </Link>
         <Link to="/orders-and-returns">
           <div className="header_option">
             <span className="header_optionOne">Returns</span>
@@ -86,7 +84,9 @@ const Header = () => {
               <AddShoppingCartIcon className="shopping_cart" fontSize="large" />
             </div>
             <div className="basket_label">
-              <span className="header_optionTwo header_basketCount">{basket?.length}</span>
+              <span className="header_optionTwo header_basketCount">
+                {basket?.length}
+              </span>
             </div>
           </div>
         </Link>

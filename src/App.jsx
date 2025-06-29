@@ -1,4 +1,5 @@
 import "./App.css";
+import { useContext, useEffect } from "react";
 
 import { Redirect, Route, Switch } from "react-router-dom";
 import Home from "./components/Home.jsx"; // Make sure to import these
@@ -11,9 +12,23 @@ import OrdersAndReturns from "./components/OrdersAndReturns.jsx";
 import Basket from "./components/Basket.jsx";
 import Header_Menu from "./components/Layout/Header_Menu.jsx";
 import NotFound from "./components/NotFound.jsx";
-import AuthContext from "./context/authContext.jsx";
+import ShoppingContext from "./context/shopping/shoppingContext";
+import { auth } from "./Firebase.jsx";
 
 function App() {
+    const shoppingContext = useContext(ShoppingContext);
+    const { setUser } = shoppingContext;
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      console.log("user is -> ", authUser);
+
+      if(authUser){
+        setUser(authUser)
+      }else{
+        setUser(null)
+      }
+    })
+  }, [])
   return (
     <>
       <Header />
