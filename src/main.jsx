@@ -4,16 +4,13 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
-import AuthContext, { AuthContextProvider } from "./context/authContext.jsx";
 import { ShoppingState } from "./context/shopping/ShoppingState.jsx";
 
 ReactDOM.render(
   <BrowserRouter>
-    <AuthContextProvider>
-      <ShoppingState>
-        <App />
-      </ShoppingState>
-    </AuthContextProvider>
+    <ShoppingState>
+      <App />
+    </ShoppingState>
   </BrowserRouter>,
   document.getElementById("root")
 );

@@ -30,7 +30,7 @@ const Products = () => {
           title="PLAYSTATION 5 SLIM + PS5 MEDIA REMOTE + MARVEL'S SPIDERMAN 2 (PS5) + MORTAL KOMBAT 11 ULTIMATE (PS5) + TEST DRIVE UNLIMITED SOLAR CROWN (PS5)by Sony"
           image="https://m.media-amazon.com/images/I/71FmBlNp0lL._AC_UL320_.jpg"
           rating={5}
-          price={15,727}
+          price={15727}
         />
         <Product
           id="4"
