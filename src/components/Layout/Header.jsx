@@ -78,7 +78,7 @@ const Header = () => {
           </div>
         </Link>
 
-        <Link to="/basket">
+        <Link to="/checkout">
           <div className="header_option_basket">
             <div className="basket_icon">
               <AddShoppingCartIcon className="shopping_cart" fontSize="large" />

@@ -7,15 +7,28 @@ export const ShoppingState = (props) => {
   const [state, dispatch] = useReducer(shoppingReducer, initialState);
 
   //Selector=> what we want to manipulate the state
-  const getBasketTotal = (basket) => {
+  const getBasketTotal = (basket) => 
     basket?.reduce((amount, item) => item.price + amount, 0);
-  };
-  const addToBasket = async (item) => {
+  
+  const addToBasket = async ({item}) => {
     dispatch({
       type: "ADD_TO_BASKET",
       payload: item,
     });
   };
+
+  const emptyBasket = () =>{
+    dispatch({
+      type: 'EMPTY_BASKET',
+    })
+  }
+
+  const removeFromBasket = (item) => {
+    dispatch({
+      type:'REMOVE_FROM_BASKET',
+      payload:item,
+    })
+  }
 
   const setUser = (user) => {
     dispatch({
@@ -31,7 +44,9 @@ export const ShoppingState = (props) => {
         user: state.user,
         getBasketTotal,
         addToBasket,
-        setUser
+        removeFromBasket,
+        setUser,
+        emptyBasket,
       }}
     >
       {props.children}
